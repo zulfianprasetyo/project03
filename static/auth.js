@@ -27,6 +27,7 @@ function sign_in() {
     success: function (response) {
       if (response["result"] === "success") {
         $.cookie("mytoken", response["token"], { path: "/" });
+        alert("Login completed successfully!");
         window.location.replace("/");
       } else {
         alert(response["msg"]);
@@ -40,12 +41,13 @@ function sign_up() {
   let password = $("#input-password").val();
   let password2 = $("#input-password2").val();
   console.log(username, password, password2);
+  console.log($("#help-id").attr("class"));
 
   if ($("#help-id").hasClass("is-danger")) {
-    alert("Please check your id");
+    alert("Please check your id!");
     return;
   } else if (!$("#help-id").hasClass("is-success")) {
-    alert("Please double check your id");
+    alert("Please double check your id, something is wrong!");
     return;
   }
 
@@ -59,7 +61,7 @@ function sign_up() {
   } else if (!is_password(password)) {
     $("#help-password")
       .text(
-        "Please check your password. For your password, please enter 8-20 English characters, numbers, or the following special characters (!@#$%^&*)"
+        "Please check your password. For your password, please enter 8-20 characters, numbers, or the following special characters (!@#$%^&*)"
       )
       .removeClass("is-safe")
       .addClass("is-danger");
@@ -87,7 +89,7 @@ function sign_up() {
     return;
   } else {
     $("#help-password2")
-      .text("Your passwords do not match")
+      .text("Your passwords match!")
       .removeClass("is-danger")
       .addClass("is-success");
   }
@@ -99,7 +101,7 @@ function sign_up() {
       password_give: password,
     },
     success: function (response) {
-      alert("Your are signed up! Nice!");
+      alert("Your are registered, Nice!");
       window.location.replace("/login");
     },
   });
@@ -129,7 +131,7 @@ function check_dup() {
   console.log(username);
   if (username === "") {
     $("#help-id")
-      .text("Enter in your id")
+      .text("Please enter in your id")
       .removeClass("is-safe")
       .addClass("is-danger");
     $("#input-username").focus();
@@ -138,7 +140,7 @@ function check_dup() {
   if (!is_nickname(username)) {
     $("#help-id")
       .text(
-        "Please check your id. For your id, please enter 2-10 English characters, numbers, or the following special characters (._-)"
+        "Please check your id. For your id, please enter 2-10 characters, numbers, or the following special characters (._-)"
       )
       .removeClass("is-safe")
       .addClass("is-danger");
@@ -161,7 +163,7 @@ function check_dup() {
         $("#input-username").focus();
       } else {
         $("#help-id")
-          .text("This id is available!")
+          .text("This id is available for use!")
           .removeClass("is-danger")
           .addClass("is-success");
       }
